@@ -8,3 +8,12 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+a {
+    color: #f26535;
+}
+
+a:hover,
+a:focus {
+    color: #e5450f;
+}
