@@ -13,7 +13,8 @@ const DadJoke = (jokeRequest) => {
         const APIEndpoint = jokeRequest.joke ? `${APIBase}j/${jokeRequest.joke}` : APIBase;
         fetch(APIEndpoint, {
             headers: {
-            Accept: 'application/json'
+                'Accept': 'application/json',
+                'User-Agent' : 'DadJokez (https://github.com/pattonwebz/dadjokez)'
             }
         })
         .then((res) => res.json())
