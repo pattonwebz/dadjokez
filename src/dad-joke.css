@@ -1,0 +1,11 @@
+.dad-joke {
+    position: relative;
+}
+
+.dad-joke .permalink {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 1rem;
+    text-shadow: none;
+}

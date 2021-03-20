@@ -1,11 +1,11 @@
-import DadJokesComponent from 'react-dadjokes'
+import DadJoke from '../components/DadJoke'
 
 const HomePage = () => {
 
     return (
         <>
             <section className="inner-container">
-                <DadJokesComponent />
+                <DadJoke />
             </section>
         </>
     );
