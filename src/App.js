@@ -1,16 +1,24 @@
 import './App.css';
-import DadJokesComponent from 'react-dadjokes'
+import { Route, Switch } from 'react-router-dom';
+
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
     return (
-        <div id="wrapper">
-            <section className="inner-container">
-                <DadJokesComponent />
-            </section>
-            <div class="footer">
-                <small>Made with ❤️ in Scotland 🏴󠁧󠁢󠁳󠁣󠁴󠁿 by <a href="https://twitter.com/will_patton_88">William Patton</a> - <a href="https://www.pattonwebz.com">PattonWebz</a>. <br /> Yes, Alan, I do live in Scotland.</small>
-            </div>
-        </div>
+        <>
+            <Header />
+            <main id="wrapper">
+                <Switch>
+                    <Route path="/" component={HomePage} exact />
+                    <Route path="/about" component={AboutPage} />
+                </Switch>
+            </main>
+            <Footer />
+        </>
     );
 }
 

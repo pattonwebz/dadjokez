@@ -1,0 +1,26 @@
+#site-nav {
+    padding: 1rem 2rem;
+    background-color: #f26536;
+    display: flex;
+    flex-direction: row;
+	align-items: center;
+}
+
+#site-nav .nav a {
+    color: white;
+}
+
+#site-nav .nav a:hover,
+#site-nav .nav a:focus {
+    color: white;
+    text-decoration: underline dotted;
+}
+
+#site-nav .site-title h1 {
+    margin: 0;
+}
+
+#site-nav .nav li {
+    display: inline-block;
+    margin-left: 1rem;
+}
