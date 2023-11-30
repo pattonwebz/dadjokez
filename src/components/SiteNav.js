@@ -25,10 +25,18 @@ const SiteNav = () => {
                 </li>
                 <li>
                     <NavLink
+                        to="/dog-joke"
+                        activeStyle={activeStyleRules}
+                    >
+                        Dog Joke
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
                         to="/about"
                         activeStyle={activeStyleRules}
                     >
-                        About Us
+                        About
                     </NavLink>
                 </li>
             </ul>

@@ -7,6 +7,7 @@ import JokePage from './pages/JokePage';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+import DogJokePage from "./pages/DogJokePage";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
             <main id="wrapper">
                 <Switch>
                     <Route path="/" component={HomePage} exact />
+                    <Route path="/dog-joke" component={DogJokePage} />
                     <Route path="/about" component={AboutPage} />
                     <Route path="/joke/:jokeID" component={JokePage} />
                 </Switch>
