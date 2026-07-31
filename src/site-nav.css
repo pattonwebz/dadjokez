@@ -16,6 +16,11 @@
     text-decoration: underline dotted;
 }
 
+#site-nav .nav a.is-active {
+    font-weight: bold;
+    text-decoration: none;
+}
+
 #site-nav .site-title h1 {
     margin: 0;
 }
