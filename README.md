@@ -40,8 +40,14 @@ is kept alive by `public/CNAME`, which gets copied into every build.
 | `/dog-joke`       | A random joke from a search for "dog"            |
 | `/about`          | About the site                                   |
 | `/joke/:jokeID`   | One specific joke, by its API id                 |
+| anything else     | A not found page                                 |
 
 GitHub Pages has no server-side routing, so `public/404.html` bounces deep
 links back through `index.html` with the original path in the query string,
 where a snippet in the page head restores it. Both halves of that hack need to
 stay in place for permalinks to survive a hard refresh.
+
+That same hack means an unknown URL is served as a normal page once the
+redirect has run, so the catch-all route renders the not found page with a
+200 rather than a real 404 status. Static hosting cannot do better without a
+server, and it does not affect what a visitor sees.

@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import JokePage from './pages/JokePage';
 import DogJokePage from './pages/DogJokePage';
+import NotFoundPage from './pages/NotFoundPage';
 
 import SiteNav from './components/SiteNav';
 import Footer from './components/Footer';
@@ -20,6 +21,7 @@ const App = () => {
                     <Route path="/dog-joke" element={<DogJokePage />} />
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/joke/:jokeID" element={<JokePage />} />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </main>
             <Footer />
