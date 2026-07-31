@@ -15,7 +15,15 @@ const fetchFromAPI = async (path, signal) => {
         throw new Error(`icanhazdadjoke responded with ${response.status}`);
     }
 
-    return response.json();
+    const data = await response.json();
+
+    // An unknown joke id comes back as HTTP 200 with the real status buried in
+    // the body, so the response code alone is not enough to spot a failure.
+    if (data.status >= 400) {
+        throw new Error(data.message || `icanhazdadjoke returned ${data.status}`);
+    }
+
+    return data;
 };
 
 /**
