@@ -1,4 +1,8 @@
+import usePageTitle from '../hooks/usePageTitle';
+
 const AboutPage = () => {
+    usePageTitle('About');
+
     return (
         <section className="inner-container">
             <h2 className="page-title">About DadJokez</h2>

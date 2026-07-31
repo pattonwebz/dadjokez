@@ -1,9 +1,21 @@
-#site-nav {
+#site-header {
     padding: 1rem 2rem;
     background-color: #f26536;
     display: flex;
     flex-direction: row;
 	align-items: center;
+}
+
+#site-header .site-title h1 {
+    margin: 0;
+}
+
+/* Spacing that used to come from the browser's default list styles, set here
+   now that the list sits inside the nav rather than beside the title. */
+#site-nav .nav {
+    margin: 1em 0;
+    padding-left: 40px;
+    list-style: none;
 }
 
 #site-nav .nav a {
@@ -19,10 +31,6 @@
 #site-nav .nav a.is-active {
     font-weight: bold;
     text-decoration: none;
-}
-
-#site-nav .site-title h1 {
-    margin: 0;
 }
 
 #site-nav .nav li {

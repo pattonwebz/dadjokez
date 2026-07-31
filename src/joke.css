@@ -2,6 +2,10 @@
     position: relative;
 }
 
+.joke__status:focus {
+    outline: none;
+}
+
 .joke .permalink {
     position: absolute;
     bottom: 5px;

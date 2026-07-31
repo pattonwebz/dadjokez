@@ -1,6 +1,10 @@
 import { Link } from 'react-router';
 
+import usePageTitle from '../hooks/usePageTitle';
+
 const NotFoundPage = () => {
+    usePageTitle('Page Not Found');
+
     return (
         <section className="inner-container">
             <h2 className="page-title">404</h2>

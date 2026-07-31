@@ -1,33 +1,54 @@
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 
 import '../joke.css';
 
 const JokeCard = ({ status, joke, retry }) => {
-    if (status === 'loading') {
-        return (
-            <div className="joke" aria-busy="true">
-                <p>Loading...</p>
-            </div>
-        );
-    }
+    const statusRef = useRef(null);
+    const hasRetried = useRef(false);
 
-    if (status === 'error') {
-        return (
-            <div className="joke joke--error">
-                <p>The joke machine is having a bad day.</p>
-                <button className="retry" type="button" onClick={retry}>
-                    Try again
-                </button>
-            </div>
-        );
-    }
+    const handleRetry = () => {
+        hasRetried.current = true;
+        retry();
+    };
+
+    // The retry button unmounts as soon as it is pressed, which would drop
+    // keyboard focus back to the top of the document. Move it onto the result
+    // instead, once the request has settled.
+    useEffect(() => {
+        if (status !== 'loading' && hasRetried.current) {
+            hasRetried.current = false;
+            statusRef.current?.focus();
+        }
+    }, [status]);
 
     return (
-        <div className="joke">
-            <p>{joke.joke}</p>
-            <small className="permalink">
-                <Link to={`/joke/${joke.id}`}>Permalink</Link>
-            </small>
+        <div className="joke" aria-busy={status === 'loading'}>
+            {/*
+                One container that outlives every state change, so a screen
+                reader announces the joke arriving. Swapping the whole element
+                per state would leave nothing to announce against, and the
+                content of a live region is not read out when it first appears.
+            */}
+            <div className="joke__status" role="status" tabIndex={-1} ref={statusRef}>
+                {status === 'loading' && <p>Loading a joke...</p>}
+                {status === 'error' && <p>The joke machine is having a bad day.</p>}
+                {status === 'ready' && <p>{joke.joke}</p>}
+            </div>
+
+            {status === 'error' && (
+                <button className="retry" type="button" onClick={handleRetry}>
+                    Try again
+                </button>
+            )}
+
+            {status === 'ready' && (
+                <small className="permalink">
+                    <Link to={`/joke/${joke.id}`} aria-label="Permalink to this joke">
+                        Permalink
+                    </Link>
+                </small>
+            )}
         </div>
     );
 }

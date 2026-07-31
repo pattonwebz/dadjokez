@@ -6,10 +6,7 @@ const navLinkClass = ({ isActive }) => (isActive ? 'is-active' : undefined);
 
 const SiteNav = () => {
     return (
-        <nav id="site-nav">
-            <div className="site-title">
-                <h1>Dad Jokez</h1>
-            </div>
+        <nav id="site-nav" aria-label="Main">
             <ul className="nav">
                 <li>
                     <NavLink to="/" className={navLinkClass} end>
