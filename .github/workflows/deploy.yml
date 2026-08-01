@@ -3,6 +3,11 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Noon UTC on the first of the month. The joke cache is keyed by month, so
+  # this run is the one that misses it, refetches, and picks up anything the
+  # API has added since.
+  schedule:
+    - cron: '0 12 1 * *'
   # Lets you redeploy from the Actions tab without pushing a commit.
   workflow_dispatch:
 
@@ -29,6 +34,19 @@ jobs:
           cache: npm
 
       - run: npm ci
+
+      # Keyed by month with no restore-keys, so every build in the same month
+      # reuses one fetch and the first build of a new month goes and gets the
+      # jokes again.
+      - name: Work out the cache month
+        id: month
+        run: echo "key=$(date -u +%Y-%m)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore the jokes
+        uses: actions/cache@v6
+        with:
+          path: .cache/jokes.json
+          key: jokes-${{ steps.month.outputs.key }}
 
       - run: npm run build
 

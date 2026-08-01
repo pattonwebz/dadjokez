@@ -16,7 +16,9 @@
     --surface: #241a3d;
     --surface-text: #5ce1e6;
     --surface-title: #5ce1c9;
-    --surface-edge: #b06cff;
+    /* Same cyan as the nav links, so the rule reads as part of them rather
+       than as another accent. */
+    --surface-edge: #5ce1e6;
 
     /* Links and decorative marks on the page. */
     --brand: #5ce1e6;

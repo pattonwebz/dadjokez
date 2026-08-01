@@ -21,6 +21,12 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const dist = join(here, '..', 'dist');
 
+// Fetching every joke costs 25 requests against someone else's free API, and
+// the answer barely changes. CI restores this file from its cache, and a local
+// build reuses whatever the last one wrote. Set REFRESH_JOKES=1 to ignore it.
+const cacheDir = join(here, '..', '.cache');
+const cacheFile = join(cacheDir, 'jokes.json');
+
 const SITE = 'https://dadjokez.com';
 const SITE_NAME = 'Dad Jokez';
 const OG_IMAGE = `${SITE}/og-card.png`;
@@ -66,6 +72,29 @@ const fetchAllJokes = async () => {
     } while (page <= totalPages);
 
     return jokes;
+};
+
+const readCachedJokes = async () => {
+    if (process.env.REFRESH_JOKES) {
+        return null;
+    }
+
+    try {
+        const jokes = JSON.parse(await readFile(cacheFile, 'utf8'));
+        const usable = Array.isArray(jokes) && jokes.every((j) => j?.id && j?.joke);
+        return usable && jokes.length ? jokes : null;
+    } catch {
+        return null;
+    }
+};
+
+const writeCachedJokes = async (jokes) => {
+    try {
+        await mkdir(cacheDir, { recursive: true });
+        await writeFile(cacheFile, JSON.stringify(jokes), 'utf8');
+    } catch {
+        // The cache is only ever an optimisation.
+    }
 };
 
 /**
@@ -125,10 +154,16 @@ const run = async () => {
     }
 
     const started = Date.now();
-    const jokes = await fetchAllJokes();
+
+    const cached = await readCachedJokes();
+    const jokes = cached ?? (await fetchAllJokes());
 
     if (!jokes.length) {
         throw new Error('No jokes came back, refusing to write empty pages');
+    }
+
+    if (!cached) {
+        await writeCachedJokes(jokes);
     }
 
     const staticPages = [
@@ -174,7 +209,8 @@ const run = async () => {
 
     const seconds = ((Date.now() - started) / 1000).toFixed(1);
     console.log(
-        `prerender: ${jokes.length} joke pages + ${staticPages.length} static pages in ${seconds}s`
+        `prerender: ${jokes.length} joke pages + ${staticPages.length} static pages in ${seconds}s` +
+        ` (jokes ${cached ? 'from cache' : 'fetched from the API'})`
     );
 };
 

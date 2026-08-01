@@ -9,6 +9,9 @@
 # local vite cache
 .vite
 
+# jokes fetched at build time, restored from the Actions cache in CI
+/.cache
+
 # misc
 .DS_Store
 .env.local
