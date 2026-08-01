@@ -37,7 +37,7 @@
 .footer {
     text-align: center;
     font-size: 1rem;
-    margin-bottom: 8px;
+    margin-bottom: 1rem;
 }
 
 /* small shrinks itself relative to its parent, which would put a non-rem size
