@@ -27,10 +27,15 @@ Builds the production bundle into the `dist` folder.
 Serves the contents of `dist` locally so you can check a production build
 before shipping it.
 
-### `npm run deploy`
+## Deploying
 
-Builds the site and pushes `dist` to the `gh-pages` branch. The custom domain
-is kept alive by `public/CNAME`, which gets copied into every build.
+Pushing to `main` builds the site and publishes it to GitHub Pages, via
+`.github/workflows/deploy.yml`. There is no manual deploy step. You can also
+trigger a redeploy by hand from the repository's Actions tab.
+
+The workflow refuses to publish if `dist/CNAME` is missing or does not say
+`dadjokez.com`, since that file is what keeps the site on its custom domain,
+and if `dist/404.html` is missing, since that is half of the redirect below.
 
 ## Routes
 

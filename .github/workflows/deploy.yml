@@ -1,0 +1,73 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Lets you redeploy from the Actions tab without pushing a commit.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it half way, but only
+# queue one behind it: if several pushes land together, the newest wins.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # dist/CNAME is what keeps the site on dadjokez.com. It is copied from
+      # public/ by the build, so a change there could drop it silently and the
+      # custom domain would come off on the next deploy.
+      - name: Check the custom domain survived the build
+        run: |
+          if [ ! -f dist/CNAME ]; then
+            echo "dist/CNAME is missing. public/CNAME must be present so the build copies it through."
+            exit 1
+          fi
+          expected="dadjokez.com"
+          actual="$(tr -d '[:space:]' < dist/CNAME)"
+          if [ "$actual" != "$expected" ]; then
+            echo "dist/CNAME says '$actual', expected '$expected'."
+            exit 1
+          fi
+          echo "dist/CNAME is $actual"
+
+      # 404.html is half of the redirect that keeps deep links working on
+      # static hosting. The other half is the snippet in index.html.
+      - name: Check the SPA fallback is in place
+        run: |
+          test -f dist/404.html || { echo "dist/404.html is missing, deep links would stop resolving."; exit 1; }
+          echo "dist/404.html is present"
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
