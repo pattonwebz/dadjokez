@@ -56,6 +56,21 @@ jobs:
           test -f dist/404.html || { echo "dist/404.html is missing, deep links would stop resolving."; exit 1; }
           echo "dist/404.html is present"
 
+      # Link previews and permalink status codes both depend on these
+      # existing. Shipping without them looks fine in a browser and is only
+      # noticed when someone shares a joke.
+      - name: Check the joke pages were prerendered
+        run: |
+          count=$(find dist/joke -name index.html | wc -l)
+          if [ "$count" -lt 500 ]; then
+            echo "Only $count prerendered joke pages, expected several hundred."
+            exit 1
+          fi
+          for page in dist/about dist/dog-joke dist/favorites; do
+            test -f "$page/index.html" || { echo "$page/index.html is missing."; exit 1; }
+          done
+          echo "$count joke pages plus the static ones"
+
       - uses: actions/configure-pages@v6
 
       - uses: actions/upload-pages-artifact@v5

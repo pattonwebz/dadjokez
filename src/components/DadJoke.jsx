@@ -1,4 +1,5 @@
 import useJoke from '../hooks/useJoke';
+import usePageTitle from '../hooks/usePageTitle';
 import JokeCard from './JokeCard';
 
 const selectJoke = (data) => ({ id: data.id, joke: data.joke });
@@ -10,6 +11,11 @@ const selectJoke = (data) => ({ id: data.id, joke: data.joke });
  */
 const DadJoke = ({ joke }) => {
     const state = useJoke(`/j/${joke}`, selectJoke);
+
+    // The prerendered page already carries the joke as its title, for the sake
+    // of link previews. Setting anything else here would replace it with
+    // something vaguer the moment the bundle runs.
+    usePageTitle(state.joke ? state.joke.joke : 'A Joke');
 
     return <JokeCard {...state} nextTo="/" />;
 }

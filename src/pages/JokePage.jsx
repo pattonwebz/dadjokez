@@ -1,12 +1,10 @@
 import { useParams } from 'react-router';
 
 import DadJoke from '../components/DadJoke';
-import usePageTitle from '../hooks/usePageTitle';
 
+// The title is set by DadJoke, which is the thing that knows the joke.
 const JokePage = () => {
     const { jokeID } = useParams();
-
-    usePageTitle('A Joke');
 
     return (
         <section className="inner-container">
