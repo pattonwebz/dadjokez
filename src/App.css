@@ -30,8 +30,8 @@
 .inner-container > div {
     box-sizing: border-box;
     padding: 5rem 3rem;
-    border: 0.25rem solid #f26535;
-    text-shadow: 1px 5px #f2653525;
+    border: 0.25rem solid var(--brand);
+    box-shadow: 0 0 24px var(--glow);
 }
 
 .footer {
@@ -56,6 +56,6 @@
 
     .inner-container > div {
         padding: 3rem 1rem;
-        border: 2px solid #f26535;
+        border: 2px solid var(--brand);
     }
 }

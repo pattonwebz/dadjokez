@@ -1,12 +1,42 @@
+/*
+    Palette. Every colour here is checked against WCAG AA for the size it is
+    used at: 4.5:1 for body copy and links, 3:1 for large headings and for
+    decorative marks like the card border and the rule under the header.
+
+    Neon on a dark ground does most of the work. The one thing to watch when
+    changing these is that the neons are light, so they belong on the dark
+    page or as a fill under dark text, never as light text on a light fill.
+*/
+:root {
+    --page-bg: #14101f;
+    --text: #eef0ff;
+
+    /* The header band and what sits on it. */
+    --surface: #241a3d;
+    --surface-text: #ff77d9;
+    --surface-edge: #b06cff;
+
+    /* Links and decorative marks on the page. */
+    --brand: #5ce1e6;
+    --brand-hover: #8df0f4;
+
+    /* Neon fills carry dark text, not white. */
+    --button-bg: #5ce1e6;
+    --button-bg-hover: #8df0f4;
+    --button-text: #14101f;
+
+    --glow: rgba(176, 108, 255, 0.45);
+}
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #282c34;
+    background-color: var(--page-bg);
     height: 100vh;
     line-height: 1.25;
-    color: white;
+    color: var(--text);
 }
 
 code {
@@ -14,12 +44,12 @@ code {
 }
 
 a {
-    color: #f26535;
+    color: var(--brand);
 }
 
 a:hover,
 a:focus {
-    color: #e5450f;
+    color: var(--brand-hover);
 }
 
 /* Available to screen readers and nothing else. Used for headings that label a
@@ -43,21 +73,21 @@ a:focus {
     left: -9999px;
     z-index: 10;
     padding: 0.75rem 1.5rem;
-    background-color: #282c34;
-    color: white;
-    border: 2px solid #f26535;
+    background-color: var(--page-bg);
+    color: var(--text);
+    border: 2px solid var(--brand);
 }
 
 /* Needs to restate the colour because the generic a:hover/a:focus rule is more
    specific than .skip-link on its own, and would otherwise repaint the text in
-   an orange that does not carry enough contrast against the dark background. */
+   a shade that does not carry enough contrast against the dark background. */
 .skip-link:focus {
     left: 0;
-    color: white;
+    color: var(--text);
 }
 
 :focus-visible {
-    outline: 3px solid white;
+    outline: 3px solid var(--text);
     outline-offset: 2px;
 }
 

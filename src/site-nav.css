@@ -1,6 +1,9 @@
 #site-header {
     padding: 1rem 2rem;
-    background-color: #f26536;
+    background-color: var(--surface);
+    /* The band sits close to the page in tone, so a neon rule does the work of
+       separating them instead of relying on the fill alone. */
+    border-bottom: 2px solid var(--surface-edge);
     display: flex;
     flex-direction: row;
 	align-items: center;
@@ -8,6 +11,7 @@
 
 #site-header .site-title h1 {
     margin: 0;
+    color: var(--surface-edge);
 }
 
 /* Spacing that used to come from the browser's default list styles, set here
@@ -19,12 +23,12 @@
 }
 
 #site-nav .nav a {
-    color: white;
+    color: var(--surface-text);
 }
 
 #site-nav .nav a:hover,
 #site-nav .nav a:focus {
-    color: white;
+    color: var(--surface-text);
     text-decoration: underline dotted;
 }
 
