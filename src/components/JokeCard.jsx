@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 import { isFavorite, toggleFavorite } from '../favorites';
 import { setShortcutsEnabled } from '../shortcuts';
@@ -8,12 +8,15 @@ import useHotkeys from '../hooks/useHotkeys';
 
 import '../joke.css';
 
-const NOTE_MS = 3000;
-
-const JokeCard = ({ status, joke, retry, onNext }) => {
+/**
+ * `onNext` swaps the joke in place. `nextTo` is for pages that have no buffer
+ * of their own, such as a permalink, where the way to a fresh joke is a link
+ * somewhere else.
+ */
+const JokeCard = ({ status, joke, retry, onNext, nextTo }) => {
+    const navigate = useNavigate();
     const statusRef = useRef(null);
     const hasRetried = useRef(false);
-    const noteTimer = useRef(null);
     const [note, setNote] = useState('');
 
     // Subscribing keeps the button in step when the same joke is saved or
@@ -22,14 +25,9 @@ const JokeCard = ({ status, joke, retry, onNext }) => {
     const saved = joke ? isFavorite(joke.id) : false;
 
     // Says what just happened, for anyone who triggered it from the keyboard
-    // and so has no button label to read the result from.
-    const showNote = useCallback((text) => {
-        setNote(text);
-        clearTimeout(noteTimer.current);
-        noteTimer.current = setTimeout(() => setNote(''), NOTE_MS);
-    }, []);
-
-    useEffect(() => () => clearTimeout(noteTimer.current), []);
+    // and so has no button label to read the result from. It stays until
+    // something else happens rather than timing out.
+    const showNote = useCallback((text) => setNote(text), []);
 
     const handleRetry = () => {
         hasRetried.current = true;
@@ -75,21 +73,23 @@ const JokeCard = ({ status, joke, retry, onNext }) => {
         }
     }, [status]);
 
-    // A new joke clears whatever the last action said.
+    // Showing a different joke is itself an action, so it clears the note.
     useEffect(() => {
-        clearTimeout(noteTimer.current);
         setNote('');
     }, [joke?.id]);
 
     const bindings = {};
     if (onNext) {
         bindings.n = onNext;
+    } else if (nextTo) {
+        bindings.n = () => navigate(nextTo);
     }
     if (status === 'ready') {
         bindings.f = handleSave;
         bindings.c = handleCopy;
     }
     const shortcutsOn = useHotkeys(bindings);
+    const canGoNext = Boolean(onNext || nextTo);
 
     return (
         <>
@@ -122,6 +122,11 @@ const JokeCard = ({ status, joke, retry, onNext }) => {
                                 Tell me another
                             </button>
                         )}
+                        {!onNext && nextTo && (
+                            <Link className="next" to={nextTo}>
+                                Tell me another
+                            </Link>
+                        )}
                         <button
                             className="save"
                             type="button"
@@ -151,7 +156,7 @@ const JokeCard = ({ status, joke, retry, onNext }) => {
                     {shortcutsOn ? (
                         <>
                             Press{' '}
-                            {onNext && (
+                            {canGoNext && (
                                 <>
                                     <kbd>N</kbd> for another,{' '}
                                 </>

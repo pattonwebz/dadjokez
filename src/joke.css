@@ -32,6 +32,11 @@
     border-radius: 4px;
     padding: 0.5rem 1.5rem;
     cursor: pointer;
+    /* "Tell me another" is a link on a permalink page and a button
+       everywhere else, so both have to land on the same shape. */
+    display: inline-block;
+    text-decoration: none;
+    line-height: 1.25;
 }
 
 .joke .next:hover,
