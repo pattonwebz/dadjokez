@@ -74,6 +74,31 @@ a:focus {
     color: var(--brand-hover);
 }
 
+kbd {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-size: 0.875rem;
+    border: 1px solid var(--brand);
+    border-radius: 3px;
+    padding: 0.1em 0.4em;
+}
+
+/* A button that reads as a link, for actions sitting inside a sentence. Still
+   a button, because it acts on the page rather than going anywhere. */
+.link-button {
+    font: inherit;
+    color: var(--brand);
+    background: none;
+    border: none;
+    padding: 0;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.link-button:hover,
+.link-button:focus {
+    color: var(--brand-hover);
+}
+
 /* Available to screen readers and nothing else. Used for headings that label a
    page whose design has no room for a visible title. */
 .visually-hidden {

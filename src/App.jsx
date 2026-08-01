@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import JokePage from './pages/JokePage';
 import DogJokePage from './pages/DogJokePage';
+import FavoritesPage from './pages/FavoritesPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 import SiteNav from './components/SiteNav';
@@ -45,6 +46,7 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/dog-joke" element={<DogJokePage />} />
+                    <Route path="/favorites" element={<FavoritesPage />} />
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/joke/:jokeID" element={<JokePage />} />
                     <Route path="*" element={<NotFoundPage />} />

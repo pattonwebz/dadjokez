@@ -13,13 +13,22 @@
     font-size: 1rem;
 }
 
+.joke__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+}
+
 .joke .next,
+.joke .save,
 .joke .retry {
     font: inherit;
     font-size: 1.25rem;
     color: var(--button-text);
     background-color: var(--button-bg);
-    border: none;
+    border: 2px solid var(--button-bg);
     border-radius: 4px;
     padding: 0.5rem 1.5rem;
     cursor: pointer;
@@ -27,11 +36,39 @@
 
 .joke .next:hover,
 .joke .next:focus,
+.joke .save:hover,
+.joke .save:focus,
 .joke .retry:hover,
 .joke .retry:focus {
     background-color: var(--button-bg-hover);
+    border-color: var(--button-bg-hover);
 }
 
-.joke .next {
-    margin-top: 2.5rem;
+/* Already saved reads as an outline rather than a fill, so the solid button is
+   always the one offering to do something. */
+.joke .save[aria-pressed="true"] {
+    background-color: transparent;
+    border-color: var(--brand);
+    color: var(--brand);
+}
+
+.joke .save[aria-pressed="true"]:hover,
+.joke .save[aria-pressed="true"]:focus {
+    background-color: transparent;
+    border-color: var(--brand-hover);
+    color: var(--brand-hover);
+}
+
+/* Holds its height while empty so confirming an action does not shunt the
+   permalink or the card around. */
+.joke__note {
+    font-size: 1rem;
+    min-height: 1.5rem;
+    margin: 1rem 0 0;
+}
+
+.shortcut-hint {
+    font-size: 1rem;
+    margin: 1.5rem 0 0;
+    text-align: center;
 }
