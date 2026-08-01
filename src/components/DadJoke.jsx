@@ -3,8 +3,12 @@ import JokeCard from './JokeCard';
 
 const selectJoke = (data) => ({ id: data.id, joke: data.joke });
 
+/**
+ * One specific joke, by id. Permalinks go through here rather than the buffer,
+ * since the whole point of the URL is that it resolves to that joke.
+ */
 const DadJoke = ({ joke }) => {
-    const state = useJoke(joke ? `/j/${joke}` : '/', selectJoke);
+    const state = useJoke(`/j/${joke}`, selectJoke);
 
     return <JokeCard {...state} />;
 }

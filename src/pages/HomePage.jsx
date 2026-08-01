@@ -1,4 +1,4 @@
-import DadJoke from '../components/DadJoke';
+import QueuedJoke from '../components/QueuedJoke';
 import usePageTitle from '../hooks/usePageTitle';
 
 const HomePage = () => {
@@ -7,7 +7,7 @@ const HomePage = () => {
     return (
         <section className="inner-container">
             <h2 className="visually-hidden">A random dad joke</h2>
-            <DadJoke />
+            <QueuedJoke source="random" />
         </section>
     );
 }

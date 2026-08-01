@@ -1,4 +1,4 @@
-import DogJoke from '../components/DogJoke';
+import QueuedJoke from '../components/QueuedJoke';
 import usePageTitle from '../hooks/usePageTitle';
 
 const DogJokePage = () => {
@@ -7,7 +7,7 @@ const DogJokePage = () => {
     return (
         <section className="inner-container">
             <h2 className="visually-hidden">A random dog joke</h2>
-            <DogJoke />
+            <QueuedJoke source="dog" />
         </section>
     );
 }

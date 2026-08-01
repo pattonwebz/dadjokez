@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 import '../joke.css';
 
-const JokeCard = ({ status, joke, retry }) => {
+const JokeCard = ({ status, joke, retry, onNext }) => {
     const statusRef = useRef(null);
     const hasRetried = useRef(false);
 
@@ -14,7 +14,8 @@ const JokeCard = ({ status, joke, retry }) => {
 
     // The retry button unmounts as soon as it is pressed, which would drop
     // keyboard focus back to the top of the document. Move it onto the result
-    // instead, once the request has settled.
+    // instead, once the request has settled. The "tell me another" button does
+    // not need this: it stays mounted, so focus never leaves it.
     useEffect(() => {
         if (status !== 'loading' && hasRetried.current) {
             hasRetried.current = false;
@@ -39,6 +40,12 @@ const JokeCard = ({ status, joke, retry }) => {
             {status === 'error' && (
                 <button className="retry" type="button" onClick={handleRetry}>
                     Try again
+                </button>
+            )}
+
+            {status === 'ready' && onNext && (
+                <button className="next" type="button" onClick={onNext}>
+                    Tell me another
                 </button>
             )}
 
