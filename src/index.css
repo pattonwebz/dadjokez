@@ -35,8 +35,30 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--page-bg);
     height: 100vh;
+    font-size: 1rem;
     line-height: 1.25;
     color: var(--text);
+}
+
+/*
+    Headings are sized here rather than left to the browser's defaults, which
+    are in em and so multiply against whatever the parent happens to be. The
+    values match what those defaults previously worked out to: 2rem for the
+    site title, and 3rem for a page title inside the 2rem main column.
+*/
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 3rem;
+}
+
+/* Matches the step down #wrapper takes at the same breakpoint. */
+@media only screen and (max-width: 1024px) {
+    h2 {
+        font-size: 2.25rem;
+    }
 }
 
 code {

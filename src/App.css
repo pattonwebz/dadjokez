@@ -36,7 +36,15 @@
 
 .footer {
     text-align: center;
-    font-size: 1.25rem;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+/* small shrinks itself relative to its parent, which would put a non-rem size
+   back into the page. All the footer text sits inside one, so it takes the
+   footer's own size instead. */
+.footer small {
+    font-size: inherit;
 }
 
 .page-title {
@@ -45,7 +53,7 @@
 
 @media only screen and (max-width: 1024px) {
     #wrapper {
-        font-size: 24px;
+        font-size: 1.5rem;
         line-height: 1.25;
     }
 
