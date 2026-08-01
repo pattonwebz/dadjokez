@@ -11,9 +11,11 @@
     --page-bg: #14101f;
     --text: #eef0ff;
 
-    /* The header band and what sits on it. */
+    /* The header band and what sits on it. The title sits a short way round
+       the wheel from the nav links: related, but not the same colour. */
     --surface: #241a3d;
-    --surface-text: #ff77d9;
+    --surface-text: #5ce1e6;
+    --surface-title: #5ce1c9;
     --surface-edge: #b06cff;
 
     /* Links and decorative marks on the page. */
